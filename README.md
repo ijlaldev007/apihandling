@@ -230,77 +230,215 @@ The project will progressively implement more advanced patterns and techniques t
 
 ## Implementation Plan
 
-### Phase 1: Foundation and Basic API Handling
-- [x] Set up Express backend with sample product data
+### Phase 1: Foundation and API Client Setup
+- [x] Set up Express backend with multiple data type endpoints
 - [x] Configure Axios in React frontend
-- [x] Implement basic product fetching
-- [ ] Add comprehensive loading and error states
-- [ ] Create a ProductService with Axios for all API calls
-- [ ] Implement request/response interceptors
+- [ ] Create a base API client with TypeScript generics
+- [ ] Implement request/response interceptors for error handling
 - [ ] Add request cancellation on component unmount
-- [ ] Create a reusable API client with TypeScript generics
-- [ ] Implement different response handlers (JSON, CSV)
-- [ ] Add mock API service for offline development
+- [ ] Create type definitions for all API responses
+- [ ] Implement authentication headers and token refresh
+- [ ] Add request/response logging for debugging
+- [ ] Create a mock API service for offline development
 
-### Phase 2: Custom Hooks and State Management
-- [ ] Create useProducts hook for fetching products
-- [ ] Implement useProductDetails hook for single product
-- [ ] Add useSearch hook for filtering products
-- [ ] Create usePagination hook with different strategies
-- [ ] Develop useForm hook for product creation/editing
-- [ ] Implement useLocalStorage for persistent client state
-- [ ] Create useDebounce and useThrottle for input handling
-- [ ] Add useMediaQuery for responsive design
-- [ ] Implement useIntersectionObserver for lazy loading
-- [ ] Create useEventListener for DOM event handling
+### Phase 2: Data Type-Specific API Services
 
-### Phase 3: React Query Implementation
+#### Tabular Data (Products API)
+- [ ] Create ProductService with methods for all endpoints
+- [ ] Implement filtering, sorting, and pagination
+- [ ] Add type-safe response handling
+- [ ] Create comprehensive error handling
+- [ ] Implement optimistic updates for product mutations
+
+#### Hierarchical Data
+- [ ] Create HierarchicalService for organization data
+- [ ] Implement methods for traversing the hierarchy
+- [ ] Add utilities for finding paths between nodes
+- [ ] Create functions for manipulating tree structures
+- [ ] Implement caching for frequently accessed nodes
+
+#### Time Series Data
+- [ ] Create TimeSeriesService with data aggregation
+- [ ] Implement date range filtering and formatting
+- [ ] Add methods for comparing multiple metrics
+- [ ] Create utilities for calculating trends and anomalies
+- [ ] Implement real-time updates with polling
+
+#### Geospatial Data
+- [ ] Create GeospatialService with location methods
+- [ ] Implement distance calculations and sorting
+- [ ] Add utilities for route optimization
+- [ ] Create functions for clustering nearby points
+- [ ] Implement geofencing and boundary checks
+
+#### Relational Data
+- [ ] Create RelationalService for social graph data
+- [ ] Implement methods for traversing relationships
+- [ ] Add utilities for finding connections and paths
+- [ ] Create recommendation algorithms
+- [ ] Implement graph manipulation functions
+
+#### Statistical Data
+- [ ] Create StatisticsService with analysis methods
+- [ ] Implement aggregation and summary calculations
+- [ ] Add utilities for normalizing distributions
+- [ ] Create functions for trend identification
+- [ ] Implement comparative analysis between datasets
+
+#### Document Data
+- [ ] Create DocumentService with content handling
+- [ ] Implement search and filtering capabilities
+- [ ] Add utilities for content sanitization
+- [ ] Create functions for handling attachments
+- [ ] Implement caching for large documents
+
+#### Event/Calendar Data
+- [ ] Create EventService with scheduling methods
+- [ ] Implement date range filtering and formatting
+- [ ] Add utilities for recurring event expansion
+- [ ] Create functions for conflict detection
+- [ ] Implement timezone handling and conversion
+
+### Phase 3: Custom Hooks for Each Data Type
+
+#### General Hooks
+- [ ] Create useApi hook for base API interactions
+- [ ] Implement useError for standardized error handling
+- [ ] Add useLoading for loading state management
+- [ ] Create usePagination with different strategies
+- [ ] Implement useSearch for generic search functionality
+- [ ] Add useSort for sortable collections
+- [ ] Create useFilter for complex filtering
+- [ ] Implement useDebounce and useThrottle for input handling
+- [ ] Add useLocalStorage for persistent client state
+- [ ] Create useMediaQuery for responsive design
+
+#### Data Type-Specific Hooks
+- [ ] Create useProducts hook for product data
+- [ ] Implement useHierarchy for tree data
+- [ ] Add useTimeSeries for time-based data
+- [ ] Create useMap for geospatial data
+- [ ] Implement useGraph for relational data
+- [ ] Add useStatistics for statistical data
+- [ ] Create useDocument for rich content
+- [ ] Implement useCalendar for event data
+
+### Phase 4: React Query Implementation
+
+#### Basic Setup
 - [ ] Set up React Query provider and devtools
-- [ ] Convert existing hooks to use React Query
+- [ ] Create queryClient configuration
+- [ ] Implement global error handling
+- [ ] Add default query options
+- [ ] Create custom query hooks
+
+#### Data Type-Specific Queries
+- [ ] Convert product hooks to use React Query
+- [ ] Implement hierarchical data queries with caching
+- [ ] Add time series queries with date-based keys
+- [ ] Create geospatial queries with location-based invalidation
+- [ ] Implement relational data queries with entity normalization
+- [ ] Add statistical data queries with polling
+- [ ] Create document queries with prefetching
+- [ ] Implement calendar queries with date range prefetching
+
+#### Advanced React Query Features
 - [ ] Implement query invalidation strategies
-- [ ] Add infinite scrolling for products list
-- [ ] Create mutations for product CRUD operations
-- [ ] Implement optimistic updates with error handling
-- [ ] Add prefetching for anticipated user actions
-- [ ] Implement query cancellation and retry logic
-- [ ] Create dependent queries for related data
-- [ ] Add background refetching and polling for real-time data
+- [ ] Add infinite scrolling for large datasets
+- [ ] Create mutations with optimistic updates
+- [ ] Implement dependent queries for related data
+- [ ] Add background refetching and polling
+- [ ] Create query cancellation and retry logic
+- [ ] Implement query caching strategies
+- [ ] Add offline support with persistence
 
-### Phase 4: Basic Layout Patterns
-- [ ] Create a grid layout for products
-- [ ] Implement a table view with sorting and filtering
-- [ ] Add a card layout with hover effects
-- [ ] Create a master-detail view for product inspection
-- [ ] Implement skeleton loading components
-- [ ] Add responsive layouts for mobile/desktop
-- [ ] Create error boundary components with fallbacks
-- [ ] Implement modal and drawer components
-- [ ] Add toast notifications for user feedback
-- [ ] Create tabs and accordion components
+### Phase 5: UI Components for Each Data Type
 
-### Phase 5: Advanced Data Visualization
-- [ ] Implement time series charts for sales data
-- [ ] Create a map view for store locations
-- [ ] Add statistical visualizations for product metrics
-- [ ] Implement a calendar view for product launches
-- [ ] Create a hierarchical view for product categories
-- [ ] Add a network graph for related products
-- [ ] Implement a document viewer for product documentation
-- [ ] Create a dashboard with multiple visualization types
-- [ ] Add interactive filters and drill-down capabilities
-- [ ] Implement print and export functionality
+#### Tabular Data (Products)
+- [ ] Create a data table component with sorting and filtering
+- [ ] Implement row selection and bulk actions
+- [ ] Add column customization and resizing
+- [ ] Create expandable rows for details
+- [ ] Implement pagination controls
+- [ ] Add export functionality (CSV, Excel)
+- [ ] Create print-friendly views
+
+#### Hierarchical Data
+- [ ] Create a tree view component with expand/collapse
+- [ ] Implement drag-and-drop for reorganizing
+- [ ] Add context menus for node actions
+- [ ] Create breadcrumb navigation
+- [ ] Implement search within tree
+- [ ] Add horizontal tree layout option
+- [ ] Create visualization for large hierarchies
+
+#### Time Series Data
+- [ ] Create line and area charts for time series
+- [ ] Implement zoom and pan controls
+- [ ] Add date range selector
+- [ ] Create annotations and markers
+- [ ] Implement real-time updates
+- [ ] Add comparison view for multiple series
+- [ ] Create export and sharing options
+
+#### Geospatial Data
+- [ ] Create map component with markers
+- [ ] Implement clustering for many points
+- [ ] Add route visualization
+- [ ] Create heatmaps for density
+- [ ] Implement geofencing visualization
+- [ ] Add location search and filtering
+- [ ] Create responsive map controls
+
+#### Relational Data
+- [ ] Create force-directed graph visualization
+- [ ] Implement node and edge styling
+- [ ] Add interactive exploration
+- [ ] Create filtering by relationship type
+- [ ] Implement zooming and focusing
+- [ ] Add node details panel
+- [ ] Create path highlighting
+
+#### Statistical Data
+- [ ] Create bar charts and histograms
+- [ ] Implement pie and donut charts
+- [ ] Add statistical cards with KPIs
+- [ ] Create distribution visualizations
+- [ ] Implement comparative analysis views
+- [ ] Add trend indicators
+- [ ] Create drill-down capabilities
+
+#### Document Data
+- [ ] Create rich text viewer with syntax highlighting
+- [ ] Implement media gallery for attachments
+- [ ] Add table of contents navigation
+- [ ] Create print and export options
+- [ ] Implement search within documents
+- [ ] Add annotation capabilities
+- [ ] Create responsive layouts for different devices
+
+#### Event/Calendar Data
+- [ ] Create month, week, and day calendar views
+- [ ] Implement agenda list view
+- [ ] Add event creation and editing
+- [ ] Create drag-and-drop scheduling
+- [ ] Implement recurring event visualization
+- [ ] Add timeline view for projects
+- [ ] Create reminders and notifications
 
 ### Phase 6: Advanced Features and Optimization
-- [ ] Add authentication and protected routes
-- [ ] Implement real-time updates with WebSockets
-- [ ] Create a shopping cart with React Query
-- [ ] Add advanced search with filters and sorting
-- [ ] Implement drag-and-drop for product organization
+- [ ] Implement authentication and protected routes
+- [ ] Add role-based access control
+- [ ] Create real-time updates with WebSockets
+- [ ] Implement advanced search with filters
 - [ ] Add dark/light theme switching
 - [ ] Create virtualized lists for performance
 - [ ] Implement code splitting and lazy loading
-- [ ] Add accessibility features (ARIA, keyboard navigation)
-- [ ] Create comprehensive test suite (unit, integration, e2e)
+- [ ] Add keyboard navigation and shortcuts
+- [ ] Create accessibility features (ARIA)
+- [ ] Implement comprehensive test suite
+- [ ] Add performance monitoring and optimization
+- [ ] Create documentation and usage examples
 
 ## Project Structure
 
@@ -392,26 +530,178 @@ apihandling/
 
 ## Backend API Endpoints
 
-The backend currently provides the following endpoints:
+The backend provides the following endpoints for different data types:
 
-### Products API
+### 1. Products API (Tabular Data)
 
-- `GET /api/products` - Get all products
+- `GET /api/products` - Get all products with filtering, sorting, and pagination
   - Query parameters:
     - `search` - Filter products by name (case-insensitive)
-  - Response: Array of product objects
-  - Example response:
-    ```json
-    [
-      {
-        "id": 1,
-        "name": "Wireless Mouse",
-        "price": 15.99,
-        "image": "https://via.placeholder.com/150"
-      },
-      ...
-    ]
-    ```
+    - `category` - Filter products by category
+    - `minPrice` - Filter products with price >= minPrice
+    - `maxPrice` - Filter products with price <= maxPrice
+    - `sort` - Field to sort by (e.g., price, name, rating)
+    - `order` - Sort order: 'asc' (default) or 'desc'
+    - `page` - Page number for pagination
+    - `limit` - Number of items per page
+  - Response: Paginated product objects with metadata
+
+- `GET /api/products/:id` - Get a single product by ID
+  - Response: Detailed product object
+
+- `GET /api/products/categories/all` - Get all product categories
+  - Response: Array of category strings
+
+### 2. Hierarchical Data API
+
+- `GET /api/hierarchical` - Get complete hierarchical organization structure
+  - Response: Nested tree structure with departments, teams, and members
+
+- `GET /api/hierarchical/:id` - Get a specific node in the hierarchy by ID
+  - Response: Node object with its children
+
+- `GET /api/hierarchical/:id/children` - Get children of a specific node
+  - Response: Array of child nodes
+
+- `GET /api/hierarchical/:id/path` - Get the path from root to a specific node
+  - Response: Array of nodes representing the path
+
+### 3. Time Series Data API
+
+- `GET /api/time-series` - Get time series data with optional filtering
+  - Query parameters:
+    - `metric` - Type of metric (temperature, stock, users, traffic)
+    - `days` - Number of days of data to return (1-365)
+    - `resolution` - Data resolution (daily, hourly)
+  - Response: Time series data points with metadata
+
+- `GET /api/time-series/metrics` - Get available metrics for time series data
+  - Response: Array of available metrics
+
+- `GET /api/time-series/compare` - Compare multiple metrics over time
+  - Query parameters:
+    - `metrics` - Comma-separated list of metrics to compare
+    - `days` - Number of days of data to return
+  - Response: Multiple time series datasets for comparison
+
+### 4. Geospatial Data API
+
+- `GET /api/geospatial/locations` - Get all location data
+  - Query parameters:
+    - `type` - Filter locations by type (retail, warehouse, distribution)
+  - Response: Array of location objects with coordinates
+
+- `GET /api/geospatial/locations/:id` - Get a specific location by ID
+  - Response: Detailed location object
+
+- `GET /api/geospatial/routes` - Get all delivery routes
+  - Query parameters:
+    - `start` - Filter routes by starting location ID
+    - `end` - Filter routes by ending location ID
+  - Response: Array of route objects with stops
+
+- `GET /api/geospatial/routes/:id` - Get a specific route by ID with location details
+  - Response: Detailed route object with enhanced stop information
+
+- `GET /api/geospatial/nearby` - Find locations within a radius of coordinates
+  - Query parameters:
+    - `lat` - Latitude
+    - `lng` - Longitude
+    - `radius` - Radius in miles (default: 10)
+  - Response: Locations within the specified radius, sorted by distance
+
+- `GET /api/geospatial/types` - Get all location types
+  - Response: Array of location type strings
+
+### 5. Relational Data API
+
+- `GET /api/relational` - Get all nodes and edges in the social network
+  - Response: Complete social network data with nodes and edges
+
+- `GET /api/relational/nodes` - Get all nodes in the network
+  - Query parameters:
+    - `type` - Filter nodes by type (user, post, group)
+  - Response: Array of node objects
+
+- `GET /api/relational/nodes/:id` - Get a specific node by ID
+  - Response: Detailed node object
+
+- `GET /api/relational/edges` - Get all edges (relationships) in the network
+  - Query parameters:
+    - `type` - Filter edges by type (follows, created, liked, member, admin)
+    - `source` - Filter edges by source node ID
+    - `target` - Filter edges by target node ID
+  - Response: Array of edge objects
+
+- `GET /api/relational/connections/:id` - Get all connections for a specific node
+  - Response: Node with its connections (edges and connected nodes)
+
+- `GET /api/relational/recommendations/:userId` - Get recommendations for a user
+  - Response: Recommended users, posts, and groups based on network
+
+### 6. Statistical Data API
+
+- `GET /api/statistics/age` - Get age distribution statistics
+  - Response: Age distribution data with summary statistics
+
+- `GET /api/statistics/income` - Get income distribution statistics
+  - Response: Income distribution data with summary statistics
+
+- `GET /api/statistics/geographic` - Get geographic distribution statistics
+  - Response: Geographic distribution data with percentages
+
+- `GET /api/statistics/devices` - Get device usage statistics
+  - Response: Device usage data with percentages
+
+- `GET /api/statistics/satisfaction` - Get customer satisfaction survey results
+  - Response: Satisfaction rating distribution with summary statistics
+
+- `GET /api/statistics/dashboard` - Get all statistics for a dashboard
+  - Response: Combined statistical data for all metrics
+
+### 7. Document Data API
+
+- `GET /api/documents` - Get all documents with optional filtering
+  - Query parameters:
+    - `category` - Filter documents by category
+    - `tag` - Filter documents by tag
+    - `search` - Search in document title and content
+  - Response: Document metadata (without full content)
+
+- `GET /api/documents/:id` - Get a specific document with full content
+  - Response: Complete document with HTML content and attachments
+
+- `GET /api/documents/categories/all` - Get all document categories
+  - Response: Array of category strings
+
+- `GET /api/documents/tags/all` - Get all document tags with counts
+  - Response: Array of tags with usage counts
+
+### 8. Event/Calendar Data API
+
+- `GET /api/events` - Get all events with optional filtering
+  - Query parameters:
+    - `start` - Filter events starting on or after this date
+    - `end` - Filter events starting on or before this date
+    - `category` - Filter events by category
+    - `attendee` - Filter events by attendee ID or name
+    - `search` - Search in event title and description
+  - Response: Array of event objects
+
+- `GET /api/events/:id` - Get a specific event by ID
+  - Response: Detailed event object with attendees and attachments
+
+- `GET /api/events/day/:date` - Get all events for a specific day
+  - Response: Events occurring on the specified day
+
+- `GET /api/events/week/:startDate` - Get all events for a specific week
+  - Response: Events occurring during the specified week
+
+- `GET /api/events/month/:yearMonth` - Get all events for a specific month
+  - Response: Events occurring during the specified month
+
+- `GET /api/events/categories/all` - Get all event categories
+  - Response: Array of event category strings
 
 ## Learning Resources
 
