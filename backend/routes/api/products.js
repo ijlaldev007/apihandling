@@ -122,7 +122,33 @@ const products = [
     description: "Tactile mechanical keyboard with customizable RGB lighting.",
     features: ["Mechanical Switches", "RGB Lighting", "Programmable"],
     colors: ["Black", "White"]
+  },
+  {
+    id: 11,
+    name: "Wireless Earbuds",
+    price: 49.99,
+    image: "https://via.placeholder.com/150",
+    category: "Audio",
+    stock: 10,
+    rating: 4.3,
+    description: "True wireless earbuds with touch controls and long battery life.",
+    features: ["Wireless", "Touch Controls", "Long Battery Life"],
+    colors: ["Black", "White"]
+  },
+  {
+    id: 12,
+    name: "Portable Charger",
+    price: 39.99,
+    image: "https://via.placeholder.com/150",
+    category: "Electronics",
+    stock: 30,
+    rating: 4.0,
+    description: "Portable charger with fast charging and multiple charging ports.",
+    features: ["Fast Charging", "Multiple Ports", "LED Indicator"],
+    colors: ["Black", "White"]
   }
+
+
 ];
 
 // GET all products
