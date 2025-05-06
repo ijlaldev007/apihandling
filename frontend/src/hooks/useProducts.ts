@@ -66,7 +66,7 @@ export function useFilteredProducts(params: ProductsQueryParams = {}) {
       }
     },
     // Keep previous data while loading new data (useful for pagination)
-    keepPreviousData: true,
+    staleTime: 5000, // Keeps data fresh for 5 seconds
   });
 }
 
