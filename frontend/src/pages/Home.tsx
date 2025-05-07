@@ -15,7 +15,7 @@ export default function Home() {
       name: "Hierarchical Data",
       description: "Organization chart with nested structure",
       path: "/hierarchical",
-      implemented: false,
+      implemented: true,
     },
     {
       name: "Time Series Data",

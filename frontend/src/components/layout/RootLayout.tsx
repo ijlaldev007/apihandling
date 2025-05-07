@@ -20,6 +20,11 @@ export default function RootLayout() {
                   </Link>
                 </li>
                 {/* Add more API links here as they are implemented */}
+                <li>
+                  <Link to="/hierarchical" className="hover:underline">
+                    hierarchical API
+                  </Link>
+                </li>
               </ul>
             </nav>
           </div>
