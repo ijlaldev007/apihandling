@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import type { Product, ProductsResponse } from '@/types/product';
+import { createSlug } from '@/utils/slug';
 
 // Basic hook to fetch all products
 export function useProducts() {
@@ -9,10 +10,15 @@ export function useProducts() {
     queryFn: async (): Promise<Product[]> => {
       try {
         const response = await axios.get<ProductsResponse>('/api/products');
-        
+
         // The API returns { data: Product[], meta: {...} }
         if (response.data && Array.isArray(response.data.data)) {
-          return response.data.data;
+          // Add slug to each product
+          const productsWithSlugs = response.data.data.map(product => ({
+            ...product,
+            slug: createSlug(product.name)
+          }));
+          return productsWithSlugs;
         } else {
           console.error('Unexpected API response format:', response.data);
           return [];
@@ -44,7 +50,7 @@ export function useFilteredProducts(params: ProductsQueryParams = {}) {
       try {
         // Convert params object to URL search params
         const queryParams = new URLSearchParams();
-        
+
         // Add each parameter to the query string if it exists
         if (params.search) queryParams.append('search', params.search);
         if (params.category) queryParams.append('category', params.category);
@@ -54,12 +60,21 @@ export function useFilteredProducts(params: ProductsQueryParams = {}) {
         if (params.order) queryParams.append('order', params.order);
         if (params.page) queryParams.append('page', params.page.toString());
         if (params.limit) queryParams.append('limit', params.limit.toString());
-        
+
         // Make the API request with query parameters
         const url = `/api/products?${queryParams.toString()}`;
         const response = await axios.get<ProductsResponse>(url);
-        
-        return response.data;
+
+        // Add slug to each product
+        const responseWithSlugs = {
+          ...response.data,
+          data: response.data.data.map(product => ({
+            ...product,
+            slug: createSlug(product.name)
+          }))
+        };
+
+        return responseWithSlugs;
       } catch (error) {
         console.error('Error fetching filtered products:', error);
         throw error;
@@ -78,12 +93,55 @@ export function useProduct(id: number | null) {
       if (id === null) {
         throw new Error('Product ID is required');
       }
-      
+
       const response = await axios.get<Product>(`/api/products/${id}`);
-      return response.data;
+
+      // Add slug to the product
+      const productWithSlug = {
+        ...response.data,
+        slug: createSlug(response.data.name)
+      };
+
+      return productWithSlug;
     },
     // Don't run the query if id is null
     enabled: id !== null,
+  });
+}
+
+// Hook to fetch a product by slug
+export function useProductBySlug(slug: string | null) {
+  return useQuery({
+    queryKey: ['productBySlug', slug],
+    queryFn: async (): Promise<Product> => {
+      if (!slug) {
+        throw new Error('Product slug is required');
+      }
+
+      // Since the API doesn't support fetching by slug, we need to fetch all products
+      // and find the one with the matching slug
+      const response = await axios.get<ProductsResponse>('/api/products');
+
+      if (!response.data || !Array.isArray(response.data.data)) {
+        throw new Error('Unexpected API response format');
+      }
+
+      // Find the product with the matching slug
+      const products = response.data.data;
+      const product = products.find(p => createSlug(p.name) === slug);
+
+      if (!product) {
+        throw new Error('Product not found');
+      }
+
+      // Add slug to the product
+      return {
+        ...product,
+        slug
+      };
+    },
+    // Don't run the query if slug is null
+    enabled: slug !== null,
   });
 }
 
