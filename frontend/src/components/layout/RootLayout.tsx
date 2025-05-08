@@ -22,7 +22,12 @@ export default function RootLayout() {
                 {/* Add more API links here as they are implemented */}
                 <li>
                   <Link to="/hierarchical" className="hover:underline">
-                    hierarchical API
+                    Hierarchical API
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/events" className="hover:underline">
+                    Events API
                   </Link>
                 </li>
               </ul>
