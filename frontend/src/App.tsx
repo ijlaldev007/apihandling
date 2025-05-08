@@ -5,6 +5,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import RootLayout from "@/components/layout/RootLayout";
 import Home from "@/pages/Home";
 import ProductsPage from "@/pages/products/ProductsPage";
+import HierarchicalPage from "./pages/Hierarchical/HierachicalPage";
+import EventsPage from "./pages/events/EventsPage";
 
 function App() {
   return (
@@ -14,6 +16,8 @@ function App() {
           <Route index element={<Home />} />
           <Route path="products" element={<ProductsPage />} />
           {/* Add more routes for other API types as they are implemented */}
+          <Route path="hierarchical" element={<HierarchicalPage />} />
+          <Route path="events" element={<EventsPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
