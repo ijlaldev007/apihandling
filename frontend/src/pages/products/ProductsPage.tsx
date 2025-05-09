@@ -1,5 +1,6 @@
 // Import React hooks
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 // Import custom hooks
 import { useDebounce } from "@/hooks/useDebounce";
@@ -14,7 +15,7 @@ import { SearchInput } from "@/components/search/SearchInput";
 
 // Import DataTable components
 import { DataTable } from "@/components/data-table/data-table";
-import { columns } from "@/components/data-table/columns";
+import { useProductColumns } from "./product-columns";
 
 // Import skeleton components
 import { TableSkeleton } from "@/components/skeletons/TableSkeleton";
@@ -41,6 +42,9 @@ export default function ProductsPage() {
     search: debouncedSearchTerm,
     // You can add more parameters here like sorting, pagination, etc.
   });
+
+  // Get product-specific column definitions
+  const columns = useProductColumns();
 
   // Extract products from the response
   const products: Product[] = data?.data || [];
@@ -113,7 +117,9 @@ export default function ProductsPage() {
                       <p className="text-2xl font-bold">${product.price.toFixed(2)}</p>
                     </CardContent>
                     <CardFooter>
-                      <Button variant="outline">View Details</Button>
+                      <Button variant="outline" asChild>
+                        <Link to={`/products/${product.slug}`}>View Details</Link>
+                      </Button>
                     </CardFooter>
                   </Card>
                 ))}

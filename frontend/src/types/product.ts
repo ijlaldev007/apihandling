@@ -9,6 +9,8 @@ export interface Product {
   description: string;
   features: string[];
   colors: string[];
+  // Virtual property - not from API
+  slug?: string;
 }
 
 export interface ProductsResponse {

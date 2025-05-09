@@ -51,7 +51,7 @@ export default function Home() {
       name: "Event/Calendar Data",
       description: "Meetings, deadlines, and calendar events",
       path: "/events",
-      implemented: false,
+      implemented: true,
     },
   ];
 
