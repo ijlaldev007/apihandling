@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowUpDown } from "lucide-react";
-import type { ColumnDef } from "@tanstack/react-table";
+import type { ColumnDef, Column, Row } from "@tanstack/react-table";
 
 /**
  * Creates a sortable column header
@@ -9,8 +9,8 @@ import type { ColumnDef } from "@tanstack/react-table";
  * @param label The display label for the column
  * @returns A header component for use in a column definition
  */
-export function createSortableHeader(label: string) {
-  return ({ column }: { column: any }) => (
+export function createSortableHeader<T>(label: string) {
+  return ({ column }: { column: Column<T> }) => (
     <Button
       variant="ghost"
       onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
@@ -27,9 +27,9 @@ export function createSortableHeader(label: string) {
  * @param currency The currency code (default: 'USD')
  * @returns A cell component for use in a column definition
  */
-export function createCurrencyCell(currency: string = 'USD') {
-  return ({ row, column }: { row: any, column: any }) => {
-    const rawValue = row.getValue(column.id);
+export function createCurrencyCell<T>(currency: string = 'USD') {
+  return ({ row, column }: { row: Row<T>, column: Column<T> }) => {
+    const rawValue = row.getValue(column.id) as string | number | null | undefined;
 
     // Handle null or undefined values
     if (rawValue === null || rawValue === undefined) {
@@ -37,7 +37,7 @@ export function createCurrencyCell(currency: string = 'USD') {
     }
 
     // Parse the value and format it
-    const value = parseFloat(rawValue);
+    const value = typeof rawValue === 'string' ? parseFloat(rawValue) : rawValue;
 
     // Check if value is NaN
     if (isNaN(value)) {
@@ -59,9 +59,9 @@ export function createCurrencyCell(currency: string = 'USD') {
  * @param decimals Number of decimal places (default: 0)
  * @returns A cell component for use in a column definition
  */
-export function createNumberCell(decimals: number = 0) {
-  return ({ row, column }: { row: any, column: any }) => {
-    const rawValue = row.getValue(column.id);
+export function createNumberCell<T>(decimals: number = 0) {
+  return ({ row, column }: { row: Row<T>, column: Column<T> }) => {
+    const rawValue = row.getValue(column.id) as string | number | null | undefined;
 
     // Handle null or undefined values
     if (rawValue === null || rawValue === undefined) {
@@ -69,7 +69,7 @@ export function createNumberCell(decimals: number = 0) {
     }
 
     // Parse the value and format it
-    const value = parseFloat(rawValue);
+    const value = typeof rawValue === 'string' ? parseFloat(rawValue) : rawValue;
 
     // Check if value is NaN
     if (isNaN(value)) {
@@ -90,12 +90,12 @@ export function createNumberCell(decimals: number = 0) {
  */
 export function createColumn<T>(
   accessorKey: keyof T,
-  header: string | (({ column }: { column: any }) => React.ReactNode),
-  cellRenderer?: ({ row }: { row: any }) => React.ReactNode
+  header: string | (({ column }: { column: Column<T> }) => React.ReactNode),
+  cellRenderer?: ({ row }: { row: Row<T> }) => React.ReactNode
 ): ColumnDef<T> {
   return {
     accessorKey: accessorKey as string,
-    header: typeof header === 'string' ? createSortableHeader(header) : header,
+    header: typeof header === 'string' ? createSortableHeader<T>(header) : header,
     cell: cellRenderer,
   };
 }

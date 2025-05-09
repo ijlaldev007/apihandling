@@ -145,6 +145,43 @@ export function useProductBySlug(slug: string | null) {
   });
 }
 
+// Hook to fetch products by category
+export function useProductsByCategory(category: string | null, excludeProductId?: number) {
+  return useQuery({
+    queryKey: ['productsByCategory', category, excludeProductId],
+    queryFn: async (): Promise<Product[]> => {
+      if (!category) {
+        return [];
+      }
+
+      // Create query params
+      const queryParams = new URLSearchParams();
+      queryParams.append('category', category);
+
+      // Fetch products in the category
+      const response = await axios.get<ProductsResponse>(`/api/products?${queryParams.toString()}`);
+
+      if (!response.data || !Array.isArray(response.data.data)) {
+        throw new Error('Unexpected API response format');
+      }
+
+      // Add slug to each product
+      const productsWithSlugs = response.data.data.map(product => ({
+        ...product,
+        slug: createSlug(product.name)
+      }));
+
+      // Exclude the current product if an ID is provided
+      if (excludeProductId) {
+        return productsWithSlugs.filter(product => product.id !== excludeProductId);
+      }
+
+      return productsWithSlugs;
+    },
+    enabled: !!category,
+  });
+}
+
 // Hook to fetch product categories
 export function useProductCategories() {
   return useQuery({

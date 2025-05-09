@@ -13,6 +13,9 @@ import { ChevronLeft } from "lucide-react";
 // Import skeleton components
 import { Skeleton } from "@/components/ui/skeleton";
 
+// Import product components
+import { RelatedProducts } from "@/components/products/RelatedProducts";
+
 // ProductDetailsPage component
 export default function ProductDetailsPage() {
   // Get the product slug from URL parameters
@@ -116,7 +119,6 @@ export default function ProductDetailsPage() {
         </Button>
       </div>
 
-      {/* Product details content will be implemented in the next step */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {/* Product image */}
         <div>
@@ -195,6 +197,9 @@ export default function ProductDetailsPage() {
           </Button>
         </div>
       </div>
+
+      {/* Related Products */}
+      <RelatedProducts category={product.category} currentProductId={product.id} />
     </div>
   );
 }
