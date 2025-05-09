@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import { get } from "@/api/client";
 
 import type { HierarchicalNode, PathNode } from "@/types/hierarchical";
 
@@ -8,9 +9,17 @@ import type { HierarchicalNode, PathNode } from "@/types/hierarchical";
 export function useHierarchicalData() {
   return useQuery({
     queryKey: ["hierarchicalData"],
-    queryFn: async (): Promise<HierarchicalNode> => {
-      const response = await axios.get<HierarchicalNode>("/api/hierarchical");
-      return response.data;
+    queryFn: async ({ signal }): Promise<HierarchicalNode> => {
+      try {
+        const response = await get<HierarchicalNode>("/hierarchical", { signal });
+        return response.data;
+      } catch (error) {
+        if (axios.isCancel(error)) {
+          console.log('Request cancelled:', error.message);
+          throw new Error('Request cancelled');
+        }
+        throw error;
+      }
     },
   });
 }
@@ -20,10 +29,18 @@ export function useHierarchicalData() {
 export function useHierarchicalDataById(id: string | null) {
   return useQuery({
     queryKey: ["hierarchicalData", id],
-    queryFn: async (): Promise<HierarchicalNode> => {
+    queryFn: async ({ signal }): Promise<HierarchicalNode> => {
       if (id === null) throw new Error("Node ID is required");
-      const response = await axios.get<HierarchicalNode>(`/api/hierarchical/${id}`);
-      return response.data;
+      try {
+        const response = await get<HierarchicalNode>(`/hierarchical/${id}`, { signal });
+        return response.data;
+      } catch (error) {
+        if (axios.isCancel(error)) {
+          console.log('Request cancelled:', error.message);
+          throw new Error('Request cancelled');
+        }
+        throw error;
+      }
     },
     enabled: id !== null,
   });
@@ -35,25 +52,40 @@ export function useHierarchicalDataById(id: string | null) {
 export function useHierarchicalNodeChildren(id: string | null) {
     return useQuery({
         queryKey: ["hierarchicalNodeChildren", id],
-        queryFn: async (): Promise<HierarchicalNode[]> => {
+        queryFn: async ({ signal }): Promise<HierarchicalNode[]> => {
             if (id === null) throw new Error("Node ID is required");
-            const response = await axios.get<HierarchicalNode[]>(`/api/hierarchical/${id}/children`);
-            return response.data;
+            try {
+                const response = await get<HierarchicalNode[]>(`/hierarchical/${id}/children`, { signal });
+                return response.data;
+            } catch (error) {
+                if (axios.isCancel(error)) {
+                    console.log('Request cancelled:', error.message);
+                    throw new Error('Request cancelled');
+                }
+                throw error;
+            }
         },
         enabled: id !== null,
     });
 }
 
-// function to fetch id path 
+// function to fetch id path
 export function useHierarchicalNodePath(id: string | null) {
     return useQuery({
         queryKey: ["hierarchicalNodePath", id],
-        queryFn: async (): Promise<PathNode[]> => {
+        queryFn: async ({ signal }): Promise<PathNode[]> => {
             if (id === null) throw new Error("Node ID is required");
-            const response = await axios.get<PathNode[]>(`/api/hierarchical/${id}/path`);
-            return response.data;
-        }
-
-
-    })
+            try {
+                const response = await get<PathNode[]>(`/hierarchical/${id}/path`, { signal });
+                return response.data;
+            } catch (error) {
+                if (axios.isCancel(error)) {
+                    console.log('Request cancelled:', error.message);
+                    throw new Error('Request cancelled');
+                }
+                throw error;
+            }
+        },
+        enabled: id !== null
+    });
 };
