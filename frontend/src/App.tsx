@@ -8,6 +8,7 @@ import ProductsPage from "@/pages/products/ProductsPage";
 import ProductDetailsPage from "@/pages/products/ProductDetailsPage";
 import HierarchicalPage from "./pages/Hierarchical/HierachicalPage";
 import EventsPage from "./pages/events/EventsPage";
+import TimeSeriesPage from './pages/time-series/TimeSeriesPage';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           {/* Add more routes for other API types as they are implemented */}
           <Route path="hierarchical" element={<HierarchicalPage />} />
           <Route path="events" element={<EventsPage />} />
+          <Route path="/time-series" element={<TimeSeriesPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

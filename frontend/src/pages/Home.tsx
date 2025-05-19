@@ -21,7 +21,7 @@ export default function Home() {
       name: "Time Series Data",
       description: "Temperature, stock prices, user counts, and traffic data over time",
       path: "/time-series",
-      implemented: false,
+      implemented: true, // Change from false to true
     },
     {
       name: "Geospatial Data",

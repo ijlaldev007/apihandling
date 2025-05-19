@@ -52,7 +52,7 @@ export const get = async <T>(
 // Generic POST request with AbortController support
 export const post = async <T>(
   url: string, 
-  data?: any, 
+  data?: unknown, 
   config?: AxiosRequestConfig
 ): Promise<AxiosResponse<T>> => {
   return apiClient.post<T>(url, data, config);
@@ -61,7 +61,7 @@ export const post = async <T>(
 // Generic PUT request with AbortController support
 export const put = async <T>(
   url: string, 
-  data?: any, 
+  data?: unknown, 
   config?: AxiosRequestConfig
 ): Promise<AxiosResponse<T>> => {
   return apiClient.put<T>(url, data, config);
