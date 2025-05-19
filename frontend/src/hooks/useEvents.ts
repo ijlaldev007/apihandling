@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
+import axios from "axios"; // Keep for axios.isCancel
+import { get } from "@/api/client";
 
 //import types
 import type {
@@ -31,16 +32,24 @@ import type {
 export function useEvents(params: EventsQueryParams = {}) {
   return useQuery({
     queryKey: ["events", params],
-    queryFn: async (): Promise<EventsResponse> => {
+    queryFn: async ({ signal }): Promise<EventsResponse> => {
       const queryParams = new URLSearchParams();
       if (params.start) queryParams.append("start", params.start);
       if (params.end) queryParams.append("end", params.end);
       if (params.category) queryParams.append("category", params.category);
       if (params.attendee) queryParams.append("attendee", params.attendee);
       if (params.search) queryParams.append("search", params.search);
-      const url = `/api/events?${queryParams.toString()}`;
-      const response = await axios.get<EventsResponse>(url);
-      return response.data;
+      const url = `/events?${queryParams.toString()}`;
+      try {
+        const response = await get<EventsResponse>(url, { signal });
+        return response.data;
+      } catch (error) {
+        if (axios.isCancel(error)) {
+          console.log('Request cancelled:', error.message);
+          throw new Error('Request cancelled');
+        }
+        throw error;
+      }
     },
   });
 }
@@ -61,10 +70,18 @@ export function useEvents(params: EventsQueryParams = {}) {
 export function useEvent(id: string | null) {
   return useQuery({
     queryKey: ["event", id],
-    queryFn: async (): Promise<Event> => {
+    queryFn: async ({ signal }): Promise<Event> => {
       if (id === null) throw new Error("Event ID is required");
-      const response = await axios.get<Event>(`/api/events/${id}`);
-      return response.data;
+      try {
+        const response = await get<Event>(`/events/${id}`, { signal });
+        return response.data;
+      } catch (error) {
+        if (axios.isCancel(error)) {
+          console.log('Request cancelled:', error.message);
+          throw new Error('Request cancelled');
+        }
+        throw error;
+      }
     },
     enabled: !!id, // Only fetch if id is provided
   });
@@ -91,12 +108,21 @@ export function useEvent(id: string | null) {
 export function useDayEvents(date: string | null) {
   return useQuery({
     queryKey: ["dayEvents", date],
-    queryFn: async (): Promise<DayEventsResponse> => {
+    queryFn: async ({ signal }): Promise<DayEventsResponse> => {
       if (!date) throw new Error("Date is required");
-      const response = await axios.get<DayEventsResponse>(
-        `/api/events/day/${date}`
-      );
-      return response.data;
+      try {
+        const response = await get<DayEventsResponse>(
+          `/events/day/${date}`,
+          { signal }
+        );
+        return response.data;
+      } catch (error) {
+        if (axios.isCancel(error)) {
+          console.log('Request cancelled:', error.message);
+          throw new Error('Request cancelled');
+        }
+        throw error;
+      }
     },
     enabled: !!date,
   });
@@ -124,12 +150,21 @@ export function useDayEvents(date: string | null) {
 export function useWeekEvents(startDate: string | null) {
   return useQuery({
     queryKey: ["weekEvents", startDate],
-    queryFn: async (): Promise<WeekEventsResponse> => {
+    queryFn: async ({ signal }): Promise<WeekEventsResponse> => {
       if (!startDate) throw new Error("Start date is required");
-      const response = await axios.get<WeekEventsResponse>(
-        `/api/events/week/${startDate}`
-      );
-      return response.data;
+      try {
+        const response = await get<WeekEventsResponse>(
+          `/events/week/${startDate}`,
+          { signal }
+        );
+        return response.data;
+      } catch (error) {
+        if (axios.isCancel(error)) {
+          console.log('Request cancelled:', error.message);
+          throw new Error('Request cancelled');
+        }
+        throw error;
+      }
     },
     enabled: !!startDate,
   });
@@ -158,12 +193,21 @@ export function useWeekEvents(startDate: string | null) {
 export function useMonthEvents(yearMonth: string | null) {
   return useQuery({
     queryKey: ["monthEvents", yearMonth],
-    queryFn: async (): Promise<MonthEventsResponse> => {
+    queryFn: async ({ signal }): Promise<MonthEventsResponse> => {
       if (!yearMonth) throw new Error("Year and month are required");
-      const response = await axios.get<MonthEventsResponse>(
-        `/api/events/month/${yearMonth}`
-      );
-      return response.data;
+      try {
+        const response = await get<MonthEventsResponse>(
+          `/events/month/${yearMonth}`,
+          { signal }
+        );
+        return response.data;
+      } catch (error) {
+        if (axios.isCancel(error)) {
+          console.log('Request cancelled:', error.message);
+          throw new Error('Request cancelled');
+        }
+        throw error;
+      }
     },
     enabled: !!yearMonth,
   });
@@ -185,11 +229,20 @@ export function useMonthEvents(yearMonth: string | null) {
 export function useEventCategories() {
   return useQuery({
     queryKey: ["eventCategories"],
-    queryFn: async (): Promise<CategoriesResponse> => {
-      const response = await axios.get<CategoriesResponse>(
-        "/api/events/categories/all"
-      );
-      return response.data;
+    queryFn: async ({ signal }): Promise<CategoriesResponse> => {
+      try {
+        const response = await get<CategoriesResponse>(
+          "/events/categories/all",
+          { signal }
+        );
+        return response.data;
+      } catch (error) {
+        if (axios.isCancel(error)) {
+          console.log('Request cancelled:', error.message);
+          throw new Error('Request cancelled');
+        }
+        throw error;
+      }
     },
   });
 }
