@@ -15,6 +15,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 // Import product components
 import { RelatedProducts } from "@/components/products/RelatedProducts";
+import { BuyButton } from "@/components/products/BuyButton";
 
 // ProductDetailsPage component
 export default function ProductDetailsPage() {
@@ -154,6 +155,10 @@ export default function ProductDetailsPage() {
 
           {/* Description */}
           <p className="text-base text-muted-foreground">{product.description}</p>
+
+          <div className="flex items-center gap-4">
+            <BuyButton product={product} />
+          </div>
 
           <Separator />
 

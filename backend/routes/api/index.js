@@ -8,6 +8,7 @@ import statisticsRouter from "./statistics.js";
 import documentsRouter from "./documents.js";
 import eventsRouter from "./events.js";
 import docsRouter from "./docs.js";
+import paymentsRouter from "./payments.js";
 
 const router = express.Router();
 
@@ -23,5 +24,6 @@ router.use("/relational", relationalRouter);
 router.use("/statistics", statisticsRouter);
 router.use("/documents", documentsRouter);
 router.use("/events", eventsRouter);
+router.use("/payments", paymentsRouter);
 
 export default router;
