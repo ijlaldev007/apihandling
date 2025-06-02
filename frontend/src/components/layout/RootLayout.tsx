@@ -1,7 +1,7 @@
 import { Link, Outlet } from "react-router-dom";
+import { Toaster } from "@/components/ui/sonner-toast";
 
-export default function RootLayout() {
-  return (
+export default function RootLayout() {  return (
     <div className="min-h-screen flex flex-col">
       <header className="border-b">
         <div className="container mx-auto py-4 px-4">
@@ -39,6 +39,8 @@ export default function RootLayout() {
       <main className="flex-1">
         <Outlet />
       </main>
+
+      <Toaster />
 
       <footer className="border-t py-4">
         <div className="container mx-auto px-4 text-center text-sm text-gray-500">
